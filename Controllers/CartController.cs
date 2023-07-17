@@ -38,8 +38,9 @@ public class CartController : Controller
     [HttpGet("current")]
     public async Task<IActionResult> Cart()
     {
-        // await Task.Delay(1000);
+        await Task.Delay(500);
         var items = CartRepository.GetItems();
+        
         Console.WriteLine("CartItems: " + items.Count());
         return View("Current", new UserCartViewModel { 
             IsHtmxRequest = true,

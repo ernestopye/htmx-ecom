@@ -1,0 +1,10 @@
+@using HtmxEcomSample.Components;
+@model UserSummaryViewComponentViewModel;
+
+@{
+    var hxTrigger = "updateSummary from:body" + (Model.IsHtmxRequest ? "" : ",load");
+}
+
+<li class="nav-item" hx-get="/user" hx-trigger="@hxTrigger">
+    <a class="nav-link text-dark" href="/cart">Cart @(Model.IsHtmxRequest && Model.TotalItemsInCart is not null ? "(" + @Model.TotalItemsInCart + ")" : "")</a>
+</li>
