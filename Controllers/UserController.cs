@@ -23,16 +23,4 @@ public class UserController : Controller
             TotalItemsInCart = CartRepository.GetTotalCount()
         });
     }
-
-    [HttpGet("cart")]
-    public async Task<IActionResult> Cart()
-    {
-        await Task.Delay(1000);
-        var items = CartRepository.GetItems();
-        Console.WriteLine("CartItems: " + items.Count());
-        return View("Cart", new UserCartViewModel { 
-            IsHtmxRequest = true,
-            CartItems = items
-        });
-    }
 }

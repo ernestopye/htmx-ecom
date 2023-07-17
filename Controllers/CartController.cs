@@ -22,7 +22,7 @@ public class CartController : Controller
         return View();
     }
 
-    [HttpPost("add")]
+    [HttpPost]
     public IActionResult Add(int productId)
     {
         if (!ModelState.IsValid) {
@@ -33,5 +33,35 @@ public class CartController : Controller
         CartRepository.AddItem(Catalog.Products().First(p => p.Id == productId));
         
         return View("Added");
+    }
+
+    [HttpGet("current")]
+    public async Task<IActionResult> Cart()
+    {
+        // await Task.Delay(1000);
+        var items = CartRepository.GetItems();
+        Console.WriteLine("CartItems: " + items.Count());
+        return View("Current", new UserCartViewModel { 
+            IsHtmxRequest = true,
+            CartItems = items
+        });
+    }
+
+    [HttpDelete]
+    public IActionResult Remove(int cartItemId)
+    {
+        if (!ModelState.IsValid) {
+            return BadRequest();
+        }
+
+        HttpContext.Response.Headers.Add("HX-Trigger", "updateSummary");
+        CartRepository.RemoveItem(cartItemId);
+        
+        var items = CartRepository.GetItems();
+        Console.WriteLine("CartItems: " + items.Count());
+        return View("Current", new UserCartViewModel { 
+            IsHtmxRequest = true,
+            CartItems = items
+        });
     }
 }

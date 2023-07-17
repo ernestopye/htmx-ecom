@@ -7,7 +7,7 @@
             <p class="card-text">@Model.Name</p>
             <p class="card-text">@Model.Price.ToString("C")</p>
             <div class="d-flex justify-content-between align-items-center">
-                <form method="post" hx-post="/cart/add" hx-target="this">
+                <form method="post" hx-post="/cart" hx-target="this">
                     <input type="hidden" name="productId" value="@Model.Id" />
                     <button type="submit" class="btn btn-md btn-outline-secondary">Add to Cart</button>
                 </form>
