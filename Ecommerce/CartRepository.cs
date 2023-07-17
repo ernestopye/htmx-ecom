@@ -46,4 +46,9 @@ public static class CartRepository
     {
         return _items.Sum(item => item.Price * item.Quantity);
     }
+
+    public static int GetTotalCount()
+    {
+        return _items.Sum(item => item.Quantity);
+    }
 }

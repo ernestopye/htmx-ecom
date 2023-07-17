@@ -1,0 +1,6 @@
+@model UserSummaryViewModel;
+@{
+    Layout = null;
+}
+
+<a class="nav-link text-dark" href="/cart">Cart @(Model.IsHtmxRequest && Model.TotalItemsInCart is not null ? "(" + @Model.TotalItemsInCart + ")" : "")</a>

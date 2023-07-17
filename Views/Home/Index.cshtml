@@ -1,0 +1,10 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    @foreach (var product in Ecommerce.Catalog.Products())
+    {
+        @await Html.PartialAsync("~/Views/Components/ProductCard.cshtml", product) 
+    }
+</div>
