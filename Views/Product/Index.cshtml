@@ -1,0 +1,16 @@
+@using HtmxEcomSample.Models
+@model ProductDetailsViewModel
+
+@{
+    ViewData["Title"] = @Model.Product.Name;
+}
+
+<h1>@Model.Product.Name</h1>
+<h2>@Model.Product.Price.ToString("C")</h2>
+<br />
+<form method="post" hx-post="/cart" hx-target="this">
+    <input type="hidden" name="productId" value="@Model.Product.Id" />
+    <button type="submit" class="btn btn-md btn-outline-secondary">Add to Cart</button>
+</form>
+<br />
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu egestas nulla, vel vehicula dui. Vestibulum rutrum placerat magna eget vestibulum. Vivamus mattis vel magna id placerat. Mauris pellentesque sapien non viverra aliquam. Vivamus non interdum justo. In consectetur sit amet erat at venenatis. Vivamus non consectetur nisl, a lobortis risus.</p>
