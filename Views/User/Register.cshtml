@@ -1,0 +1,26 @@
+@model UserRegisterViewModel;
+@{
+    ViewData["Title"] = "Register";
+    if (Model?.IsHtmxRequest ?? false) {
+        Layout = null;
+    } else {
+        Layout = "_Layout";
+    }
+}
+
+<form method="post" hx-post="/user/register">
+    <h1>Register</h1>
+    <hr/>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input name="email" type="email" class="form-control" id="email" value="@Model?.Email">
+    <span asp-validation-for="Email" class="text-danger"></span>
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input name="password" type="password" class="form-control" id="password" value="@Model?.Password">
+    <span asp-validation-for="Password" class="text-danger"></span>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+

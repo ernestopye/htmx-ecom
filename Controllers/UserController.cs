@@ -38,4 +38,31 @@ public class UserController : Controller
         CartRepository.Clear();
         return Ok();
     }
+
+    [HttpGet("register")]
+    public IActionResult Register() {
+        return View();
+    }
+
+    [HttpPost("register")]
+    public IActionResult Register(UserRegisterViewModel model) {
+        if (string.IsNullOrWhiteSpace(model.Email)) {
+            ModelState.AddModelError(nameof(model.Email), "Email is required");
+        } else if (model.Email != "test@test.com") {
+            ModelState.AddModelError(nameof(model.Email), "Email is already taken");
+        }
+        
+        if (string.IsNullOrWhiteSpace(model.Password)) {
+            ModelState.AddModelError(nameof(model.Password), "Password is required");
+        }
+
+        if (!ModelState.IsValid) {
+            model.IsHtmxRequest = HttpContext.Request.Headers["HX-Request"] == "true";
+            return View(model);
+        }
+
+        UserState.IsLoggedIn = true;
+        HttpContext.Response.Headers.Add("HX-Redirect", "/");
+        return Ok();
+    }
 }
