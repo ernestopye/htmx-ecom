@@ -20,3 +20,12 @@ html {
 body {
   margin-bottom: 60px;
 }
+.my-indicator{
+  display:none;
+}
+.htmx-request .my-indicator{
+  display:inline;
+}
+.htmx-request.my-indicator{
+  display:inline;
+}

@@ -1,16 +1,49 @@
 @using HtmxEcomSample.Models
+@using Ecommerce
 @model ProductDetailsViewModel
 
 @{
     ViewData["Title"] = @Model.Product.Name;
+    var isHtmxRequest = Context.Request.Headers["HX-Request"] == "true";   
+    var isHtmxBoost = Context.Request.Headers["HX-Boosted"] == "true";
+
+    if (isHtmxRequest && !isHtmxBoost) {
+        Layout = null;
+    } else {
+        Layout = "_Layout";
+    }
+
+    var productName = Model.Product.Name;
+    var variant = Model.VariantId is not null ? Catalog.GetVariantName(Model.VariantId.Value) : null;
 }
 
-<h1>@Model.Product.Name</h1>
-<h2>@Model.Product.Price.ToString("C")</h2>
-<br />
-<form method="post" hx-post="/cart" hx-target="this">
-    <input type="hidden" name="productId" value="@Model.Product.Id" />
-    <button type="submit" class="btn btn-md btn-outline-secondary">Add to Cart</button>
-</form>
-<br />
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu egestas nulla, vel vehicula dui. Vestibulum rutrum placerat magna eget vestibulum. Vivamus mattis vel magna id placerat. Mauris pellentesque sapien non viverra aliquam. Vivamus non interdum justo. In consectetur sit amet erat at venenatis. Vivamus non consectetur nisl, a lobortis risus.</p>
+<div id="product-details">
+    <h1>@(productName + " " + variant?.Name ?? "")</h1>
+    <br />
+
+    <div class="row">
+        <div class="col-md-6">
+            <img src="https://placehold.co/300x250/@(variant?.Color ?? "aaa")/FFF?text=@(variant?.Name ?? "Product")" class="img-fluid" alt="Responsive image">
+        </div>
+        <div class="col-md-6">
+            <label for="variant" class="form-label">Color</label>
+            <select id="variant" name="variantId" class="form-select" hx-get="/products/@Model.Product.Id/variants" hx-target="#product-details" hx-trigger="change" aria-label="Product variants">
+                <option value="">-- select --</option>
+                <option value="1" selected=@(Model.VariantId == 1)>Red</option>
+                <option value="2" selected=@(Model.VariantId == 2)>Green</option>
+                <option value="3" selected=@(Model.VariantId == 3)>Blue</option>
+            </select>
+
+            <br />
+            @if (Model.VariantId is not null) {
+            <h2>@Model.Product.Price.ToString("C")</h2>
+            <form method="post" hx-post="/cart" hx-target="this">
+                <input type="hidden" name="productId" value="@Model.Product.Id" />
+                <button type="submit" class="btn btn-lg btn-primary">Add to Cart</button>
+            </form>
+            }
+        </div>        
+    </div>
+    <br />
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu egestas nulla, vel vehicula dui. Vestibulum rutrum placerat magna eget vestibulum. Vivamus mattis vel magna id placerat. Mauris pellentesque sapien non viverra aliquam. Vivamus non interdum justo. In consectetur sit amet erat at venenatis. Vivamus non consectetur nisl, a lobortis risus.</p>
+</div>

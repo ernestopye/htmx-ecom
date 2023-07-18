@@ -1,4 +1,8 @@
+@{
+    ViewData["Title"] = "Cart";
+}
 <h1>Cart</h1>
 
 <hr/>
-<div id="cart" hx-get="/cart/current" hx-trigger="load">Loading...</div>
+<span id="loading-cart" class="my-indicator">Loading Cart...</span>
+<div id="cart" hx-get="/cart/current" hx-trigger="load" hx-indicator="#loading-cart"></div>
