@@ -6,7 +6,7 @@ public static class Catalog {
             yield return new Product {
                 Id = i,
                 Name = $"Product {i}",
-                Price = 19.99m
+                Price = (decimal)(GetPseudoDoubleWithinRange(1000, 5000) / 100)
             };
         }
     }
@@ -22,6 +22,14 @@ public static class Catalog {
             default:
                 return null;
         }
+    }
+
+    public static double GetPseudoDoubleWithinRange(double lowerBound, double upperBound)
+    {
+        var random = new Random();
+        var rDouble = random.NextDouble();
+        var rRangeDouble = rDouble * (upperBound - lowerBound) + lowerBound;
+        return rRangeDouble;
     }
 }
 

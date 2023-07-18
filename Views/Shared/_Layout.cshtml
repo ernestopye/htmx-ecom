@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+  var searchQuery = Context.Request.Query["q"];
+  var isSearchPage = Context.Request.Path.StartsWithSegments("/products/search");
+}
+
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -35,6 +40,18 @@
           >
               <vc:user-summary></vc:user-summary>
           </div>
+          <form method="get" action="/products/search" class="d-flex">
+            <input 
+              name="q"
+              value="@(isSearchPage ? searchQuery : "")"
+              hx-trigger="keyup changed delay:500ms, search" 
+              hx-target="#main" 
+              hx-get="/products/search" 
+              class="form-control me-2" 
+              type="search" 
+              placeholder="Search" 
+              aria-label="Search">
+          </form>
         </div>
       </nav>
     </header>
@@ -48,9 +65,7 @@
       </div>
     </footer>
     <script src="https://unpkg.com/htmx.org@1.9.3"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
   </body>
 </html>

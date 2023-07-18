@@ -1,0 +1,27 @@
+@using HtmxEcomSample.Models
+@using Ecommerce
+@model ProductSearchViewModel
+
+@{
+    ViewData["Title"] = "Search";
+    var isHtmxRequest = Context.Request.Headers["HX-Request"] == "true";   
+    var isHtmxBoost = Context.Request.Headers["HX-Boosted"] == "true";
+
+    if (isHtmxRequest && !isHtmxBoost) {
+        Layout = null;
+    }
+    else {
+        Layout = "_Layout";
+    }   
+}
+
+<h1>Search Results</h1>
+@if (Model.SearchResults.Count == 0) {
+    <p>No results found.</p>
+} else {
+    <ul>
+    @foreach (var result in Model.SearchResults) {
+        <li>@result.Name - @result.Price.ToString("C")</li>
+    }
+    </ul>
+}

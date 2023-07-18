@@ -29,4 +29,18 @@ public class ProductController : Controller
         HttpContext.Response.Headers.Add("HX-Push-Url", "/products/" + id + "/variants?variantId=" + variantId);
         return View(new ProductDetailsViewModel { Product = product, VariantId = variantId });
     }
+
+    [HttpGet("search")]
+    public IActionResult Search([FromQuery]string q)
+    {
+        if (string.IsNullOrEmpty(q))
+            return View(new ProductSearchViewModel { SearchResults = new List<Product>() });
+            
+        var products = Catalog.Products().Where(p => p.Name.ToLower().StartsWith(q.ToLower()));
+        var model = new ProductSearchViewModel {
+            SearchResults = products.ToList()
+        };
+        HttpContext.Response.Headers.Add("HX-Push-Url", "/products/search?q=" + q);
+        return View(model);
+    }
 }
