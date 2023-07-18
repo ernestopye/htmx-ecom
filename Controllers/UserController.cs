@@ -23,4 +23,19 @@ public class UserController : Controller
             TotalItemsInCart = CartRepository.GetTotalCount()
         });
     }
+
+    [HttpPost("login")]
+    public IActionResult Login() {
+        HttpContext.Response.Headers.Add("HX-Trigger", "updateSummary");
+        UserState.IsLoggedIn = true;
+        return Ok();
+    }
+
+    [HttpPost("logout")]
+    public IActionResult Logout() {
+        HttpContext.Response.Headers.Add("HX-Trigger", "updateSummary");
+        UserState.IsLoggedIn = false;
+        CartRepository.Clear();
+        return Ok();
+    }
 }

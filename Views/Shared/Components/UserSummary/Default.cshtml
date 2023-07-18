@@ -5,6 +5,18 @@
     var hxTrigger = "updateSummary from:body" + (Model.IsHtmxRequest ? "" : ",load");
 }
 
-<li class="nav-item" hx-get="/user" hx-trigger="@hxTrigger">
-    <a class="nav-link text-dark" href="/cart">Cart @(Model.IsHtmxRequest && Model.TotalItemsInCart is not null ? "(" + @Model.TotalItemsInCart + ")" : "")</a>
-</li>
+<ul class="navbar-nav flex-grow-1" hx-get="/user" hx-trigger="@hxTrigger" hx-swap="outerHTML">
+    <li class="nav-item">
+        <a class="nav-link text-dark" href="/cart">Cart @(Model.IsHtmxRequest && Model.TotalItemsInCart is not null ? "(" + @Model.TotalItemsInCart + ")" : "")</a>
+    </li>
+
+    @if (Ecommerce.UserState.IsLoggedIn) {
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="#" hx-post="/user/logout">Logout</a>
+        </li>
+    } else {
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="#" hx-post="/user/login">Login</a>
+        </li>
+    }
+</ul>
