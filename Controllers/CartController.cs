@@ -31,6 +31,8 @@ public class CartController : Controller
 
         HttpContext.Response.Headers.Add("HX-Trigger", "updateSummary");
         CartRepository.AddItem(Catalog.Products().First(p => p.Id == productId));
+
+        _logger.LogInformation("Added to Cart: {0}", productId);
         
         return View("Added");
     }
@@ -55,7 +57,7 @@ public class CartController : Controller
         await Task.Delay(500);
         var items = CartRepository.GetItems();
         
-        Console.WriteLine("CartItems: " + items.Count());
+        _logger.LogInformation("CartItems Count {0}", items.Count());
         return View("Current", new UserCartViewModel { 
             IsHtmxRequest = true,
             CartItems = items
@@ -73,7 +75,7 @@ public class CartController : Controller
         CartRepository.RemoveItem(cartItemId);
         
         var items = CartRepository.GetItems();
-        Console.WriteLine("CartItems: " + items.Count());
+        _logger.LogInformation("CartItems Count {0}", items.Count());
         return View("Current", new UserCartViewModel { 
             IsHtmxRequest = true,
             CartItems = items

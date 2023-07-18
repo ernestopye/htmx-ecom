@@ -7,8 +7,6 @@ public static class CartRepository
 
     public static void AddItem(Product product)
     {
-        Console.WriteLine("Adding item: " + product.Name);
-
         var existingItem = _items.FirstOrDefault(item => item.ProductId == product.Id);
 
         if (existingItem != null)
