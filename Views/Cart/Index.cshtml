@@ -1,8 +1,18 @@
 @{
     ViewData["Title"] = "Cart";
-}
-<h1>Cart</h1>
+    var isHtmxRequest = Context.Request.Headers["HX-Request"] == "true";
+    var isHtmxBoost = Context.Request.Headers["HX-Boosted"] == "true";
 
-<hr/>
-<span id="loading-cart" class="my-indicator">Loading Cart...</span>
-<div id="cart" hx-get="/cart/current" hx-trigger="load" hx-indicator="#loading-cart"></div>
+    if (isHtmxRequest && !isHtmxBoost)
+    {
+        Layout = null;
+    }
+}
+
+<div class="sample-transition">
+    <h1>Cart</h1>
+
+    <hr/>
+    <span id="loading-cart" class="my-indicator">Loading Cart...</span>
+    <div id="cart" hx-get="/cart/current" hx-trigger="load" hx-indicator="#loading-cart"></div>
+</div>

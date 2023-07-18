@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="row">
+<div class="row sample-transition">
     @foreach (var product in Ecommerce.Catalog.Products())
     {
         @await Html.PartialAsync("ProductCard", product) 

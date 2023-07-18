@@ -4,7 +4,9 @@
     <div class="card mb-4 box-shadow">
         <img src="https://placehold.co/300x200?text=@Model.Name" class="card-img-top" alt="...">
         <div class="card-body">
-            <p class="card-text"><a href="/products/@Model.Id">@Model.Name</a></p>
+            <p class="card-text">
+                <a hx-get="/products/@Model.Id" hx-push-url="true" hx-target="#main" hx-swap="innerHTML transition:true" href="/products/@Model.Id">@Model.Name</a>
+            </p>
             <p class="card-text">@Model.Price.ToString("C")</p>
             <div class="d-flex justify-content-between align-items-center">
                 <form method="post" hx-post="/cart" hx-target="this">

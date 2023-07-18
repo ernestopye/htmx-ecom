@@ -17,7 +17,7 @@
     var variant = Model.VariantId is not null ? Catalog.GetVariantName(Model.VariantId.Value) : null;
 }
 
-<div id="product-details">
+<div id="product-details" class="sample-transition">
     <h1>@(productName + " " + variant?.Name ?? "")</h1>
     <br />
 
@@ -27,7 +27,7 @@
         </div>
         <div class="col-md-6">
             <label for="variant" class="form-label">Color</label>
-            <select id="variant" name="variantId" class="form-select" hx-get="/products/@Model.Product.Id/variants" hx-target="#product-details" hx-trigger="change" aria-label="Product variants">
+            <select id="variant" name="variantId" class="form-select" hx-swap="innerHTML transition:true" hx-get="/products/@Model.Product.Id/variants" hx-target="#main" hx-trigger="change" aria-label="Product variants">
                 <option value="">-- select --</option>
                 <option value="1" selected=@(Model.VariantId == 1)>Red</option>
                 <option value="2" selected=@(Model.VariantId == 2)>Green</option>
@@ -37,7 +37,7 @@
             <br />
             @if (Model.VariantId is not null) {
             <h2>@Model.Product.Price.ToString("C")</h2>
-            <form method="post" hx-post="/cart" hx-target="this">
+            <form method="post" hx-post="/cart/full" hx-swap="innerHTML transition:true" hx-target="#main">
                 <input type="hidden" name="productId" value="@Model.Product.Id" />
                 <button type="submit" class="btn btn-lg btn-primary">Add to Cart</button>
             </form>

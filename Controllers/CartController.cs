@@ -35,6 +35,20 @@ public class CartController : Controller
         return View("Added");
     }
 
+    [HttpPost("full")]
+    public IActionResult AddFull(int productId)
+    {
+        if (!ModelState.IsValid) {
+            return BadRequest();
+        }
+
+        HttpContext.Response.Headers.Add("HX-Trigger", "updateSummary");
+        HttpContext.Response.Headers.Add("HX-Push-Url", "/cart");
+        CartRepository.AddItem(Catalog.Products().First(p => p.Id == productId));
+        
+        return View("Index");
+    }
+
     [HttpGet("current")]
     public async Task<IActionResult> Cart()
     {
