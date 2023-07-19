@@ -7,6 +7,9 @@
 
 <ul class="navbar-nav flex-grow-1" hx-get="/user" hx-trigger="@hxTrigger" hx-swap="outerHTML">
     <li class="nav-item">
+        <a class="nav-link text-dark" href="/sample">Sample</a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link text-dark" href="/cart">Cart @(Model.IsHtmxRequest && Model.TotalItemsInCart is not null ? "(" + @Model.TotalItemsInCart + ")" : "")</a>
     </li>
 

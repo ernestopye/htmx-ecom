@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Sample";
+}
+
+<button 
+    class="btn btn-primary"
+    hx-get="/date"
+    hx-target="#date"
+    @* hx-trigger="load, click" *@
+    @* hx-trigger="every 1s" *@
+    >Get Date</button>
+
+<div id="date"></div>
+
+<div style="height: 1500px"></div>
+
+<div hx-get="/date" hx-trigger="intersect once delay:2000ms">Lazy loaded after 2s...</div>

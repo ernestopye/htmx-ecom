@@ -26,4 +26,16 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+
+    [HttpGet("sample")]
+    public IActionResult Sample()
+    {
+        return View();
+    }
+
+    [HttpGet("date")]
+    public IActionResult Date()
+    {
+        return View();
+    }
 }
