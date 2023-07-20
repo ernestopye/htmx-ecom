@@ -1,14 +1,21 @@
 namespace Ecommerce;
 
 public static class Catalog {
+    private static readonly List<Product> _products = new();
     public static IEnumerable<Product> Products() {
+        if (_products.Any()) {
+            return _products;
+        }
+        
         for (var i = 1; i <= 12; i++) {
-            yield return new Product {
+            _products.Add(new Product {
                 Id = i,
                 Name = $"Product {i}",
                 Price = (decimal)(GetPseudoDoubleWithinRange(1000, 5000) / 100)
-            };
+            });
         }
+
+        return _products;
     }
 
     public static VariantDetails? GetVariantName(int variantId) {

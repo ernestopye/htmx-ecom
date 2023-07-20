@@ -36,7 +36,7 @@
 
             <br />
             @if (Model.VariantId is not null) {
-            <h2>@Model.Product.Price.ToString("C")</h2>
+            <h2>@Model.Product.Price.ToCurrency()</h2>
             <form method="post" hx-post="/cart/full" hx-swap="innerHTML transition:true" hx-target="#main">
                 <input type="hidden" name="productId" value="@Model.Product.Id" />
                 <button type="submit" class="btn btn-lg btn-primary">Add to Cart</button>

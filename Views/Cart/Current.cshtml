@@ -18,11 +18,11 @@
                     @item.Name
                 </a>
             </h4>
-            <h5>@item.Price.ToString("c")</h5>
+            <h5>@item.Price.ToCurrency()</h5>
             <h5>Quantity: @item.Quantity</h5>
         </div>
         <div class="col-md-2">
-            <h4>@((item.Price * item.Quantity).ToString("c"))</h4>
+            <h4>@((item.Price * item.Quantity).ToCurrency())</h4>
         </div>
         <div class="col-md-2">
             <form method="delete" hx-delete="/cart" hx-target="#cart-wrapper">
